@@ -26,3 +26,5 @@ exit
 exit
 h
 exit
+hello world
+this is really cool!
