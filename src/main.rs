@@ -13,8 +13,11 @@ fn main() {
     history = contents.split('\n').map(|s| s.to_string()).collect();
   }
 
-  prompt();
   loop {
+    clear();
+    display(&history);
+    prompt();
+
     let mut input = String::new();
     io::stdin().read_line(&mut input).unwrap();
 
@@ -26,10 +29,6 @@ fn main() {
     history.push(input.trim().to_string());
 
     fs::write("history.txt", history.join("\n")).unwrap();
-
-    clear();
-    display(&history);
-    prompt();
   }
 }
 
@@ -39,7 +38,7 @@ fn prompt() {
 }
 
 fn clear() {
-  // print!("\x1B[2J\x1B[1;1H");
+  print!("\x1B[2J\x1B[1;1H");
 }
 
 fn display(history: &Vec<String>) {
@@ -57,5 +56,5 @@ fn display(history: &Vec<String>) {
     println!();
   }
 
-  println!("{}", "-".repeat(width));
+  println!("{}", "─".repeat(width));
 }
