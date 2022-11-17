@@ -1,15 +1,18 @@
 use clap::Parser;
 use std::{
   cmp::max,
+  env::{self, Args},
   fs,
   io::{self, Write},
 };
 use terminal_size::{terminal_size, Height, Width};
 
 fn main() {
+  let file_path = env::args().nth(1).unwrap_or("history.txt".to_string());
+
   let mut history: Vec<String> = Vec::new();
 
-  if let Ok(contents) = fs::read_to_string("history.txt") {
+  if let Ok(contents) = fs::read_to_string(&file_path) {
     history = contents.split('\n').map(|s| s.to_string()).collect();
   }
 
@@ -28,7 +31,7 @@ fn main() {
 
     history.push(input.trim().to_string());
 
-    fs::write("history.txt", history.join("\n")).unwrap();
+    fs::write(&file_path, history.join("\n")).unwrap();
   }
 }
 
